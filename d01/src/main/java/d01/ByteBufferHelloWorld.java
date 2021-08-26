@@ -11,22 +11,18 @@ import java.nio.channels.FileChannel;
 public class ByteBufferHelloWorld {
     public static void main(String[] args) {
 
-        /*
-        获取Channel的方式：1. 输入输出流， 2. RandomAccessFile
-         */
         try (FileChannel channel = new FileInputStream("d01/data.txt").getChannel()) {
 
             /*
-            申请10个字节的缓存区
+            申请10个字节的缓存区。
              */
             final ByteBuffer buffer = ByteBuffer.allocate(10);
 
             while (true) {
-                /*
-                从channel中读取数据并写入到buffer中 每次读取10个字节 此时为写模式
-                读取完毕返回-1
-                */
 
+                /*
+                从 FileChannel 中读取数据并写入到 ByteBuffer 中，每次读取10个字节；此时为写模式，读取完毕返回 -1。
+                 */
                 final int length = channel.read(buffer);
 
                 log.debug("读取到的字节数为：{}", length);
@@ -36,7 +32,7 @@ public class ByteBufferHelloWorld {
                 }
 
                 /*
-                切换至读模式
+                切换至读模式。
                  */
                 buffer.flip();
 
@@ -47,7 +43,7 @@ public class ByteBufferHelloWorld {
                 }
 
                 /*
-                切换至写模式
+                清空，切换至写模式。
                  */
                 buffer.clear();
             }
